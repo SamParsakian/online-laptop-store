@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+  <div>
+    <h3 style="margin: 0;">Order #{{ order.id }}</h3>
+    <p class="text-muted" style="margin: 0.25rem 0 0 0; font-size: 0.875rem;">Customer: {{ order.customer }} — {{ order.phone }}</p>
+    <p class="text-muted" style="margin: 0; font-size: 0.875rem;">Address: {{ order.address }}</p>
+  </div>
+  <a class="btn btn-outline" href="{{ url_for('admin.orders_list') }}">Back to Orders</a>
+</div>
+<div class="card" style="padding: 1.5rem; margin-bottom: 1rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem;">
+  <div>
+    <div class="text-muted" style="font-size: 0.875rem;">Order Date</div>
+    <div>{{ order.date }}</div>
+  </div>
+  <div>
+    <div class="text-muted" style="font-size: 0.875rem;">Total</div>
+    <div style="font-weight: 600;">${{ "%.2f"|format(order.total) }}</div>
+  </div>
+  <div>
+    <div class="text-muted" style="font-size: 0.875rem;">Status</div>
+    <span style="background: #e5e7eb; padding: 0.2rem 0.5rem; border-radius: 4px;">{{ order.status }}</span>
+  </div>
+  <form method="post" action="{{ url_for('admin.order_update_status', order_id=order.id) }}" style="display: flex; gap: 0.5rem; align-items: center;">
+    <select name="status" style="padding: 0.35rem;">
+      {% for st in statuses %}
+      <option value="{{ st }}" {% if st == order.status %}selected{% endif %}>{{ st }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-primary" style="font-size: 0.875rem;">Update</button>
+  </form>
+</div>
+<div class="card" style="overflow-x: auto;">
+  <table style="width: 100%; border-collapse: collapse;">
+    <thead>
+      <tr style="background: #f3f4f6;">
+        <th style="text-align: left; padding: 0.5rem;">ID</th>
+        <th style="text-align: left; padding: 0.5rem;">Product</th>
+        <th style="text-align: right; padding: 0.5rem;">Qty</th>
+        <th style="text-align: right; padding: 0.5rem;">Price</th>
+        <th style="text-align: right; padding: 0.5rem;">Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr style="border-bottom: 1px solid #e5e7eb;">
+        <td style="padding: 0.5rem;">{{ item.id }}</td>
+        <td style="padding: 0.5rem;">{{ item.name }}</td>
+        <td style="text-align: right; padding: 0.5rem;">{{ item.qty }}</td>
+        <td style="text-align: right; padding: 0.5rem;">${{ "%.2f"|format(item.price) }}</td>
+        <td style="text-align: right; padding: 0.5rem;">${{ "%.2f"|format(item.subtotal) }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" style="text-align: center; padding: 1.5rem; color: #6b7280;">No items found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

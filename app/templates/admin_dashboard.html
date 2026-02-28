@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+  <h3 style="margin: 0;">Admin Dashboard</h3>
+  <a href="{{ url_for('admin.logout') }}" class="btn" style="background: #dc2626; color: #fff;">Logout</a>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem;">
+  <div class="card" style="padding: 1.25rem; border-top: 4px solid #9b59b6;">
+    <h5 style="margin: 0 0 0.25rem 0;">Products</h5>
+    <p class="text-muted" style="margin: 0 0 0.75rem 0; font-size: 0.875rem;">Manage catalog, details, and images.</p>
+    <a class="btn btn-primary" href="{{ url_for('admin.products_list') }}" style="font-size: 0.875rem;">Go to Products</a>
+  </div>
+  <div class="card" style="padding: 1.25rem; border-top: 4px solid #f39c12;">
+    <h5 style="margin: 0 0 0.25rem 0;">Orders</h5>
+    <p class="text-muted" style="margin: 0 0 0.75rem 0; font-size: 0.875rem;">Review orders and update statuses.</p>
+    <a class="btn btn-primary" href="{{ url_for('admin.orders_list') }}" style="font-size: 0.875rem;">Go to Orders</a>
+  </div>
+  <div class="card" style="padding: 1.25rem; border-top: 4px solid #2ecc71;">
+    <h5 style="margin: 0 0 0.25rem 0;">Payments</h5>
+    <p class="text-muted" style="margin: 0 0 0.75rem 0; font-size: 0.875rem;">Approve and track payment records.</p>
+    <a class="btn btn-primary" href="{{ url_for('admin.payments_list') }}" style="font-size: 0.875rem;">Go to Payments</a>
+  </div>
+  <div class="card" style="padding: 1.25rem; border-top: 4px solid #3498db;">
+    <h5 style="margin: 0 0 0.25rem 0;">Admin Users</h5>
+    <p class="text-muted" style="margin: 0 0 0.75rem 0; font-size: 0.875rem;">Create additional admin logins.</p>
+    <a class="btn btn-primary" href="{{ url_for('admin.admin_new_form') }}" style="font-size: 0.875rem;">Add Admin</a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+  <h3 style="margin: 0;">Create Admin User</h3>
+  <a class="btn btn-outline" href="{{ url_for('admin_dashboard') }}">Back to Dashboard</a>
+</div>
+<div class="card" style="max-width: 400px; padding: 1.5rem;">
+  <h5 style="margin: 0 0 1rem 0;">New Admin Credentials</h5>
+  <form method="post" action="{{ url_for('admin.admin_new_save') }}">
+    <div style="margin-bottom: 1rem;">
+      <label style="display: block; font-weight: 500; margin-bottom: 0.25rem;">Username</label>
+      <input type="text" name="username" required placeholder="Enter username" style="width: 100%; padding: 0.5rem;">
+    </div>
+    <div style="margin-bottom: 1rem;">
+      <label style="display: block; font-weight: 500; margin-bottom: 0.25rem;">Password</label>
+      <input type="password" name="password" required placeholder="Enter password" style="width: 100%; padding: 0.5rem;">
+    </div>
+    <button type="submit" class="btn btn-primary">Create Admin</button>
+  </form>
+</div>
+{% endblock %}

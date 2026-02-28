@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% set is_edit = mode == "edit" %}
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+  <div>
+    <h3 style="margin: 0;">{{ "Edit Product" if is_edit else "New Product" }}</h3>
+    <p class="text-muted" style="margin: 0; font-size: 0.875rem;">Enter product details below.</p>
+  </div>
+  <a class="btn btn-outline" href="{{ url_for('admin.products_list') }}">Back</a>
+</div>
+<div class="card" style="padding: 1.5rem;">
+  <form method="post" action="{% if is_edit %}{{ url_for('admin.product_edit_save', product_id=product.id) }}{% else %}{{ url_for('admin.product_new_save') }}{% endif %}">
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+      <div>
+        <label style="display: block; font-weight: 500; margin-bottom: 0.25rem;">Name</label>
+        <input type="text" name="name" required value="{{ product.name if product else '' }}" style="width: 100%; padding: 0.5rem;">
+      </div>
+      <div>
+        <label style="display: block; font-weight: 500; margin-bottom: 0.25rem;">Type</label>
+        <input type="text" name="type" required value="{{ product.type if product else '' }}" style="width: 100%; padding: 0.5rem;">
+      </div>
+      <div>
+        <label style="display: block; font-weight: 500; margin-bottom: 0.25rem;">Produce Year</label>
+        <input type="number" name="year" required value="{{ product.year if product else '' }}" style="width: 100%; padding: 0.5rem;">
+      </div>
+      <div>
+        <label style="display: block; font-weight: 500; margin-bottom: 0.25rem;">Price</label>
+        <input type="number" name="price" step="0.01" required value="{{ product.price if product else '' }}" style="width: 100%; padding: 0.5rem;">
+      </div>
+      <div>
+        <label style="display: block; font-weight: 500; margin-bottom: 0.25rem;">Total</label>
+        <input type="number" name="total" required value="{{ product.total if product else '' }}" style="width: 100%; padding: 0.5rem;">
+      </div>
+      <div>
+        <label style="display: block; font-weight: 500; margin-bottom: 0.25rem;">Model</label>
+        <input type="text" name="model" value="{{ product.model if product else '' }}" style="width: 100%; padding: 0.5rem;">
+      </div>
+      <div>
+        <label style="display: block; font-weight: 500; margin-bottom: 0.25rem;">CPU</label>
+        <input type="text" name="cpu" value="{{ product.cpu if product else '' }}" style="width: 100%; padding: 0.5rem;">
+      </div>
+      <div>
+        <label style="display: block; font-weight: 500; margin-bottom: 0.25rem;">GPU</label>
+        <input type="text" name="gpu" value="{{ product.gpu if product else '' }}" style="width: 100%; padding: 0.5rem;">
+      </div>
+      <div>
+        <label style="display: block; font-weight: 500; margin-bottom: 0.25rem;">Motherboard</label>
+        <input type="text" name="motherboard" value="{{ product.motherboard if product else '' }}" style="width: 100%; padding: 0.5rem;">
+      </div>
+      <div>
+        <label style="display: block; font-weight: 500; margin-bottom: 0.25rem;">RAM</label>
+        <input type="text" name="ram" value="{{ product.ram if product else '' }}" style="width: 100%; padding: 0.5rem;">
+      </div>
+    </div>
+    <div style="margin-top: 1rem;">
+      <label style="display: block; font-weight: 500; margin-bottom: 0.25rem;">Description</label>
+      <textarea name="description" rows="3" style="width: 100%; padding: 0.5rem;">{{ product.description if product else '' }}</textarea>
+    </div>
+    <div style="margin-top: 1rem;">
+      <button type="submit" class="btn btn-primary">{{ "Save Changes" if is_edit else "Create Product" }}</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

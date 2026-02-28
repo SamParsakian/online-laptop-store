@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+  <div>
+    <h3 style="margin: 0;">Payments</h3>
+    <p class="text-muted" style="margin: 0; font-size: 0.875rem;">Approve or review payment records.</p>
+  </div>
+  <a class="btn btn-outline" href="{{ url_for('admin_dashboard') }}">Back to Dashboard</a>
+</div>
+<div class="card" style="overflow-x: auto;">
+  <table style="width: 100%; border-collapse: collapse;">
+    <thead>
+      <tr style="background: #f3f4f6;">
+        <th style="text-align: left; padding: 0.5rem;">ID</th>
+        <th style="text-align: left; padding: 0.5rem;">Order</th>
+        <th style="text-align: left; padding: 0.5rem;">Customer</th>
+        <th style="text-align: right; padding: 0.5rem;">Total</th>
+        <th style="text-align: left; padding: 0.5rem;">Status</th>
+        <th style="text-align: left; padding: 0.5rem;">Bank Ref</th>
+        <th style="text-align: left; padding: 0.5rem;">Paid At</th>
+        <th style="text-align: left; padding: 0.5rem;">Approved</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in payments %}
+      <tr style="border-bottom: 1px solid #e5e7eb;">
+        <td style="padding: 0.5rem;">{{ p.id }}</td>
+        <td style="padding: 0.5rem;">#{{ p.order_id }}</td>
+        <td style="padding: 0.5rem;">{{ p.customer }}</td>
+        <td style="text-align: right; padding: 0.5rem;">${{ "%.2f"|format(p.total) }}</td>
+        <td style="padding: 0.5rem;">{{ p.status }}</td>
+        <td style="padding: 0.5rem;">{{ p.bank_ref or '—' }}</td>
+        <td style="padding: 0.5rem;">{{ p.paid_at or '—' }}</td>
+        <td style="padding: 0.5rem;">
+          {% if p.approved %}<span style="background: #166534; color: #fff; padding: 0.2rem 0.5rem; border-radius: 4px;">Approved</span>
+          {% else %}<span style="background: #e5e7eb; padding: 0.2rem 0.5rem; border-radius: 4px;">Pending</span>{% endif %}
+        </td>
+        <td style="padding: 0.5rem;">
+          {% if not p.approved %}
+          <form method="post" action="{{ url_for('admin.payment_approve', payment_id=p.id) }}" style="display: inline;">
+            <button type="submit" class="btn btn-primary" style="font-size: 0.875rem;">Approve</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="9" style="text-align: center; padding: 1.5rem; color: #6b7280;">No payment records found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
