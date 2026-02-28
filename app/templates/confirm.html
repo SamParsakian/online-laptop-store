@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card" style="padding: 1.5rem;">
+  <h3 style="margin-top: 0;">Order Received</h3>
+  <p>Thank you, {{ name }}!</p>
+  <p><strong>Order ID:</strong> {{ order_id }}</p>
+  <p><strong>Total Amount:</strong> ${{ "%.2f"|format(total_amount) }}</p>
+
+  {% if items %}
+  <h5 style="margin-top: 1.5rem;">Order Items</h5>
+  <table style="width: 100%; border-collapse: collapse;">
+    <thead>
+      <tr style="background: #f3f4f6;">
+        <th style="text-align: left; padding: 0.5rem;">Product</th>
+        <th style="text-align: right; padding: 0.5rem;">Quantity</th>
+        <th style="text-align: right; padding: 0.5rem;">Price</th>
+        <th style="text-align: right; padding: 0.5rem;">Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr style="border-bottom: 1px solid #e5e7eb;">
+        <td style="padding: 0.5rem;">{{ item.name }}</td>
+        <td style="text-align: right; padding: 0.5rem;">{{ item.quantity }}</td>
+        <td style="text-align: right; padding: 0.5rem;">${{ "%.2f"|format(item.price) }}</td>
+        <td style="text-align: right; padding: 0.5rem;">${{ "%.2f"|format(item.line_total) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% elif product %}
+  <h5 style="margin-top: 1.5rem;">Product</h5>
+  <p>{{ product.name }}</p>
+  {% endif %}
+
+  <div style="margin-top: 1.5rem;">
+    <h5>Contact Details</h5>
+    <p><strong>Phone:</strong> {{ phone }}</p>
+    <p><strong>Address:</strong> {{ address }}</p>
+  </div>
+
+  <a class="btn btn-primary" href="{{ url_for('home') }}" style="margin-top: 1rem;">Back to Home</a>
+</div>
+{% endblock %}
