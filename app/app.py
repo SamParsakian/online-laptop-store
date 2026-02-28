@@ -9,8 +9,12 @@ from flask import Flask, render_template
 _root = Path(__file__).resolve().parent.parent
 load_dotenv(_root / ".env")
 
+from data.database import init_db
+
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "change-me")
+
+init_db()
 
 
 @app.get("/")
