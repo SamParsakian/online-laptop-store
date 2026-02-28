@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ title or "Laptop Web Shop" }}</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; padding: 1rem; background: #f7f8fa; color: #1f2933; }
+    .header { background: #fff; padding: 1rem; border-bottom: 1px solid #e5e7eb; }
+    .brand { font-size: 1.25rem; font-weight: 700; }
+  </style>
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <header class="header">
+    <span class="brand">Laptop Web Shop</span>
+  </header>
+  <main style="max-width: 900px; margin: 2rem auto;">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
