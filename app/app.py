@@ -10,11 +10,13 @@ _root = Path(__file__).resolve().parent.parent
 load_dotenv(_root / ".env")
 
 from data.database import init_db
+from app.routes.products import bp as products_bp
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "change-me")
 
 init_db()
+app.register_blueprint(products_bp)
 
 
 @app.get("/")

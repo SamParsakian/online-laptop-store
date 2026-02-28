@@ -2,6 +2,8 @@
 
 {% block content %}
 <h1>Find Your Next Laptop</h1>
-<p class="lead">Quality laptops, curated for you.</p>
-<p>Welcome to the Laptop Web Shop. (Products and cart coming in next steps.)</p>
+<p class="text-muted">Quality laptops, curated for you.</p>
+<p>
+  <a class="btn btn-primary" href="{{ url_for('products.list_products') }}">Browse All Products</a>
+</p>
 {% endblock %}

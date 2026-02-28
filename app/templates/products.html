@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h3 class="mb-4">Product List</h3>
+<div class="product-grid">
+  {% for item in products %}
+  {% set thumbnail = item.image_url or "https://via.placeholder.com/400x250?text=No+image" %}
+  <div class="card product-card">
+    <div class="img-wrap">
+      <img src="{{ thumbnail }}" alt="{{ item.name }} thumbnail">
+    </div>
+    <div class="body">
+      <h5>{{ item.name }}</h5>
+      <p class="text-muted mb-4">{{ item.type }}</p>
+      <p><strong>${{ item.price }}</strong></p>
+      <a class="btn btn-primary" href="{{ url_for('products.product_details', product_id=item.id) }}">Details</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

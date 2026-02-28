@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: start;">
+  <div class="card" style="padding: 1.5rem;">
+    <h3 style="margin-top: 0;">{{ product.name }}</h3>
+    <p class="text-muted">{{ product.type }}</p>
+    <div class="detail-grid mb-4">
+      <div class="detail-row"><span><strong>Price</strong></span><span>${{ product.price }}</span></div>
+      <div class="detail-row"><span><strong>Model</strong></span><span>{{ product.model or '—' }}</span></div>
+      <div class="detail-row"><span><strong>CPU</strong></span><span>{{ product.cpu }}</span></div>
+      <div class="detail-row"><span><strong>GPU</strong></span><span>{{ product.gpu }}</span></div>
+      <div class="detail-row"><span><strong>RAM</strong></span><span>{{ product.ram }}</span></div>
+      <div class="detail-row"><span><strong>Year</strong></span><span>{{ product.year }}</span></div>
+    </div>
+    <p>{{ product.description or '' }}</p>
+  </div>
+  <div class="card" style="padding: 1.5rem;">
+    <h5 style="margin-top: 0;">Images</h5>
+    {% if images %}
+    <div class="images-grid mb-4">
+      {% for img in images %}
+      <img src="{{ img.url }}" alt="{{ img.alt }}">
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-muted">No images available.</p>
+    {% endif %}
+    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+      <a class="btn btn-success" href="/cart/add/{{ product.id }}">Add to Cart</a>
+      <a class="btn btn-outline" href="{{ url_for('products.list_products') }}">Back to List</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
