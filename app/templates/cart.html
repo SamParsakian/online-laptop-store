@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h3 class="mb-4">Your Cart</h3>
+
+{% if items %}
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 1.5rem;">
+  <thead>
+    <tr style="background: #f3f4f6;">
+      <th style="text-align: left; padding: 0.5rem;">Product</th>
+      <th style="text-align: right; padding: 0.5rem;">Price</th>
+      <th style="text-align: right; padding: 0.5rem;">Quantity</th>
+      <th style="text-align: right; padding: 0.5rem;">Line Total</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    <tr style="border-bottom: 1px solid #e5e7eb;">
+      <td style="padding: 0.5rem;">{{ item.name }}</td>
+      <td style="text-align: right; padding: 0.5rem;">${{ "%.2f"|format(item.price) }}</td>
+      <td style="text-align: right; padding: 0.5rem;">{{ item.quantity }}</td>
+      <td style="text-align: right; padding: 0.5rem;">${{ "%.2f"|format(item.line_total) }}</td>
+      <td style="padding: 0.5rem;">
+        <a class="btn btn-outline" href="{{ url_for('cart.remove_from_cart', cart_item_id=item.cart_item_id) }}" style="font-size: 0.875rem;">Remove</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr style="font-weight: 600;">
+      <td colspan="3" style="text-align: right; padding: 0.5rem;">Cart Total</td>
+      <td style="text-align: right; padding: 0.5rem;">${{ "%.2f"|format(cart_total) }}</td>
+      <td></td>
+    </tr>
+  </tfoot>
+</table>
+{% else %}
+<p>Your cart is empty.</p>
+{% endif %}
+
+<div style="margin-top: 1rem;">
+  <a class="btn btn-outline" href="{{ url_for('products.list_products') }}">Continue Shopping</a>
+  {% if items %}
+  <a class="btn btn-primary" href="{{ url_for('cart.checkout') }}" style="margin-left: 0.5rem;">Checkout</a>
+  {% endif %}
+</div>
+{% endblock %}

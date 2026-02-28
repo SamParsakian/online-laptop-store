@@ -27,7 +27,7 @@
     <p class="text-muted">No images available.</p>
     {% endif %}
     <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-      <a class="btn btn-success" href="/cart/add/{{ product.id }}">Add to Cart</a>
+      <a class="btn btn-success" href="{{ url_for('cart.add_to_cart', product_id=product.id) }}">Add to Cart</a>
       <a class="btn btn-outline" href="{{ url_for('products.list_products') }}">Back to List</a>
     </div>
   </div>

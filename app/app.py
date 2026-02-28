@@ -11,12 +11,16 @@ load_dotenv(_root / ".env")
 
 from data.database import init_db
 from app.routes.products import bp as products_bp
+from app.routes.cart import bp as cart_bp
+from app.routes.payment import bp as payment_bp
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "change-me")
 
 init_db()
 app.register_blueprint(products_bp)
+app.register_blueprint(cart_bp)
+app.register_blueprint(payment_bp)
 
 
 @app.get("/")

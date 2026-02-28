@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h3 class="mb-4">Checkout</h3>
+
+<h5 style="margin-top: 1.5rem;">Order Summary</h5>
+<table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+  <thead>
+    <tr style="background: #f3f4f6;">
+      <th style="text-align: left; padding: 0.5rem;">Product</th>
+      <th style="text-align: right; padding: 0.5rem;">Price</th>
+      <th style="text-align: right; padding: 0.5rem;">Quantity</th>
+      <th style="text-align: right; padding: 0.5rem;">Line Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    <tr style="border-bottom: 1px solid #e5e7eb;">
+      <td style="padding: 0.5rem;">{{ item.name }}</td>
+      <td style="text-align: right; padding: 0.5rem;">${{ "%.2f"|format(item.price) }}</td>
+      <td style="text-align: right; padding: 0.5rem;">{{ item.quantity }}</td>
+      <td style="text-align: right; padding: 0.5rem;">${{ "%.2f"|format(item.line_total) }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr style="font-weight: 600;">
+      <td colspan="3" style="text-align: right; padding: 0.5rem;">Cart Total</td>
+      <td style="text-align: right; padding: 0.5rem;">${{ "%.2f"|format(cart_total) }}</td>
+    </tr>
+  </tfoot>
+</table>
+
+<h5 style="margin-top: 1.5rem;">Customer Information</h5>
+<form method="post" action="{{ url_for('cart.process_checkout') }}" style="max-width: 400px;">
+  <div style="margin-bottom: 1rem;">
+    <label style="display: block; font-weight: 500; margin-bottom: 0.25rem;">Your Name</label>
+    <input type="text" name="name" required style="width: 100%; padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 4px;">
+  </div>
+  <div style="margin-bottom: 1rem;">
+    <label style="display: block; font-weight: 500; margin-bottom: 0.25rem;">Phone Number</label>
+    <input type="text" name="phone" required style="width: 100%; padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 4px;">
+  </div>
+  <div style="margin-bottom: 1rem;">
+    <label style="display: block; font-weight: 500; margin-bottom: 0.25rem;">Address</label>
+    <input type="text" name="address" required style="width: 100%; padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 4px;">
+  </div>
+  <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+  <a class="btn btn-outline" href="{{ url_for('cart.view_cart') }}" style="margin-left: 0.5rem;">Back to Cart</a>
+</form>
+{% endblock %}
