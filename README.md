@@ -105,10 +105,4 @@ Use this to verify the app before pushing or demoing.
 - [ ] **New admin:** Create a second admin (username + password). Logout, then log in with the new admin.
 - [ ] **Logout:** Click “Logout”. You are on the home page. Visiting `/admin/dashboard` redirects to the login page.
 
----
 
-## Pushing to GitHub
-
-- Ensure `.env` is not committed (it is in `.gitignore`).
-- The database file `*.db` is ignored; each clone will get a fresh DB and seed on first run.
-- After running through the checklist above, the project is ready to push as a student project.
