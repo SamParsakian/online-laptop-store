@@ -27,8 +27,11 @@ app.register_blueprint(admin_bp)
 
 @app.get("/")
 def home():
-    """Simple home page."""
-    return render_template("home.html")
+    """Home page with hero and featured products."""
+    from data.products_data import get_all_products
+    products = get_all_products()
+    featured = products[:4] if len(products) >= 4 else products
+    return render_template("home.html", featured_products=featured)
 
 
 @app.get("/admin")
@@ -43,6 +46,11 @@ def admin_dashboard():
     if not session.get("admin_logged"):
         return redirect(url_for("admin_panel"))
     return render_template("admin_dashboard.html")
+
+
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("404.html"), 404
 
 
 if __name__ == "__main__":

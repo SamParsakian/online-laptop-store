@@ -1,21 +1,24 @@
 {% extends "layout.html" %}
 
+{% block page_title %}
+<h1 class="page-title">Product List</h1>
+{% endblock %}
+
 {% block content %}
-<h3 class="mb-4">Product List</h3>
 <div class="product-grid">
   {% for item in products %}
   {% set thumbnail = item.image_url or "https://via.placeholder.com/400x250?text=No+image" %}
-  <div class="card product-card">
-    <div class="img-wrap">
+  <article class="card product-card h-100">
+    <div class="product-card__img-wrap">
       <img src="{{ thumbnail }}" alt="{{ item.name }} thumbnail">
     </div>
-    <div class="body">
-      <h5>{{ item.name }}</h5>
-      <p class="text-muted mb-4">{{ item.type }}</p>
-      <p><strong>${{ item.price }}</strong></p>
-      <a class="btn btn-primary" href="{{ url_for('products.product_details', product_id=item.id) }}">Details</a>
+    <div class="card-body product-card__body d-flex flex-column">
+      <h2 class="product-card__name">{{ item.name }}</h2>
+      <p class="product-card__type text-muted">{{ item.type }}</p>
+      <p class="product-card__price">${{ "%.2f"|format(item.price) }}</p>
+      <a class="btn btn-primary product-card__btn mt-auto" href="{{ url_for('products.product_details', product_id=item.id) }}">Details</a>
     </div>
-  </div>
+  </article>
   {% endfor %}
 </div>
 {% endblock %}

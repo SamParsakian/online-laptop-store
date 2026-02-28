@@ -1,24 +1,30 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: start;">
-  <div class="card" style="padding: 1.5rem;">
-    <h3 style="margin-top: 0;">{{ product.name }}</h3>
-    <p class="text-muted">{{ product.type }}</p>
-    <div class="detail-grid mb-4">
-      <div class="detail-row"><span><strong>Price</strong></span><span>${{ product.price }}</span></div>
-      <div class="detail-row"><span><strong>Model</strong></span><span>{{ product.model or '—' }}</span></div>
-      <div class="detail-row"><span><strong>CPU</strong></span><span>{{ product.cpu }}</span></div>
-      <div class="detail-row"><span><strong>GPU</strong></span><span>{{ product.gpu }}</span></div>
-      <div class="detail-row"><span><strong>RAM</strong></span><span>{{ product.ram }}</span></div>
-      <div class="detail-row"><span><strong>Year</strong></span><span>{{ product.year }}</span></div>
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="card h-100">
+      <div class="card-body">
+        <h3 class="card-title">{{ product.name }}</h3>
+        <p class="text-muted">{{ product.type }}</p>
+        <div class="row row-cols-2 g-2 mb-3">
+          <div class="col d-flex justify-content-between"><span><strong>Price</strong></span><span>${{ product.price }}</span></div>
+          <div class="col d-flex justify-content-between"><span><strong>Model</strong></span><span>{{ product.model or '—' }}</span></div>
+          <div class="col d-flex justify-content-between"><span><strong>CPU</strong></span><span>{{ product.cpu }}</span></div>
+          <div class="col d-flex justify-content-between"><span><strong>GPU</strong></span><span>{{ product.gpu }}</span></div>
+          <div class="col d-flex justify-content-between"><span><strong>RAM</strong></span><span>{{ product.ram }}</span></div>
+          <div class="col d-flex justify-content-between"><span><strong>Year</strong></span><span>{{ product.year }}</span></div>
+        </div>
+        <p class="mb-0">{{ product.description or '' }}</p>
+      </div>
     </div>
-    <p>{{ product.description or '' }}</p>
   </div>
-  <div class="card" style="padding: 1.5rem;">
+  <div class="col-lg-5">
+    <div class="card h-100 product-detail-card">
+      <div class="card-body">
     <h5 style="margin-top: 0;">Images</h5>
     {% if images %}
-    <div class="images-grid mb-4">
+    <div class="product-detail-images mb-4">
       {% for img in images %}
       <img src="{{ img.url }}" alt="{{ img.alt }}">
       {% endfor %}
@@ -26,9 +32,11 @@
     {% else %}
     <p class="text-muted">No images available.</p>
     {% endif %}
-    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+    <div class="d-grid gap-2 mt-3">
       <a class="btn btn-success" href="{{ url_for('cart.add_to_cart', product_id=product.id) }}">Add to Cart</a>
-      <a class="btn btn-outline" href="{{ url_for('products.list_products') }}">Back to List</a>
+      <a class="btn btn-outline-secondary" href="{{ url_for('products.list_products') }}">Back to List</a>
+    </div>
+      </div>
     </div>
   </div>
 </div>

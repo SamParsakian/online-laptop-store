@@ -1,9 +1,39 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h1>Find Your Next Laptop</h1>
-<p class="text-muted">Quality laptops, curated for you.</p>
-<p>
-  <a class="btn btn-primary" href="{{ url_for('products.list_products') }}">Browse All Products</a>
-</p>
+<section class="hero">
+  <h1 class="hero__title">Find Your Next Laptop</h1>
+  <p class="hero__intro">Browse top laptops for study, work, and light gaming. Compare prices and view details in one click.</p>
+  <ul class="hero__trust" aria-label="Why shop with us">
+    <li><span class="hero__trust-icon" aria-hidden="true">✓</span> Fast delivery</li>
+    <li><span class="hero__trust-icon" aria-hidden="true">✓</span> Student-friendly prices</li>
+    <li><span class="hero__trust-icon" aria-hidden="true">✓</span> Secure checkout</li>
+  </ul>
+  <a class="btn btn-primary hero__cta" href="{{ url_for('products.list_products') }}">Browse All Products</a>
+</section>
+
+{% if featured_products %}
+<section class="featured">
+  <div class="featured__header">
+    <h2 class="featured__title">Featured Products</h2>
+    <a class="featured__link" href="{{ url_for('products.list_products') }}">View all products</a>
+  </div>
+  <div class="product-grid product-grid--featured">
+    {% for item in featured_products %}
+    {% set thumbnail = item.image_url or "https://via.placeholder.com/400x250?text=No+image" %}
+    <article class="card product-card h-100">
+      <div class="product-card__img-wrap">
+        <img src="{{ thumbnail }}" alt="{{ item.name }} thumbnail">
+      </div>
+      <div class="card-body product-card__body d-flex flex-column">
+        <h3 class="product-card__name">{{ item.name }}</h3>
+        <p class="product-card__type text-muted">{{ item.type }}</p>
+        <p class="product-card__price">${{ "%.2f"|format(item.price) }}</p>
+        <a class="btn btn-primary product-card__btn mt-auto" href="{{ url_for('products.product_details', product_id=item.id) }}">Details</a>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
 {% endblock %}
